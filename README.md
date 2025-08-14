@@ -23,7 +23,7 @@ This project serves as a practical demonstration of core data engineering skills
 
 1.  **Clone the repository:**
     ```bash
-    git clone
+    git clone https://www.google.com/url?sa=E&q=https%3A%2F%2Fgithub.com%2FRithesh077%2FData_Engineering_Projects
     ```
 2.  **Navigate to the project directory:**
     ```bash

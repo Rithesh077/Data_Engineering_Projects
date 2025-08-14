@@ -1,24 +1,50 @@
-import pandas as pd
+# DEproject1.py
+
 import requests
+import pandas as pd
 
-url = "https://api.github.com/search/repositories?q=language:python&sort=stars"
 
-response = requests.get(url)
-print(response.json())
-data = response.json()
-print(data['items'])
-repo_list = data['items']
-print(len(repo_list))
-print(type(repo_list))
-new_list = []
-for repo in repo_list:
-    new_list.append({
-        'name': repo['name'],
-        'html_url': repo['html_url'],
-        'description': repo['description'],
-        'stargazers_count': repo['stargazers_count'],
-        'owner': repo['owner']['login']
-    })
+def fetch_and_process_github_repos():
+    """
+    Fetches trending Python repositories from the GitHub API,
+    processes the data, and saves it to a CSV file.
+    """
+    # E: Extract
+    url = "https://api.github.com/search/repositories?q=language:python&sort=stars"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Will raise an HTTPError for bad responses (4xx or 5xx)
+        data = response.json()
+        repo_list = data['items']
+    except requests.exceptions.RequestException as e:
+        print(f"Error during API request: {e}")
+        return
+    except KeyError:
+        print("Error: 'items' key not found in the response. The API structure may have changed.")
+        return
 
-df = pd.DataFrame(new_list)
-df.to_csv("repo_data.csv", index=False)
+    # T: Transform
+    cleaned_data = []
+    for repo in repo_list:
+        processed_repo = {
+            'name': repo.get('name'),
+            # Safely access nested key
+            'owner': repo.get('owner', {}).get('login'),
+            'stars': repo.get('stargazers_count'),
+            'url': repo.get('html_url'),
+            'description': repo.get('description')
+        }
+        cleaned_data.append(processed_repo)
+
+    # L: Load
+    df = pd.DataFrame(cleaned_data)
+    try:
+        df.to_csv("repo_data.csv", index=False)
+        print("Successfully created repo_data.csv")
+    except Exception as e:
+        print(f"Error saving to CSV: {e}")
+
+
+# This block ensures the code only runs when the script is executed directly
+if __name__ == "__main__":
+    fetch_and_process_github_repos()
