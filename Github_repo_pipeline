@@ -1,4 +1,4 @@
-# DEproject1.py
+# github_repo_pipeline
 
 import requests
 import pandas as pd
@@ -32,7 +32,8 @@ def fetch_and_process_github_repos():
             'owner': repo.get('owner', {}).get('login'),
             'stars': repo.get('stargazers_count'),
             'url': repo.get('html_url'),
-            'description': repo.get('description')
+            'description': repo.get('description'),
+            'language': repo.get('language')
         }
         cleaned_data.append(processed_repo)
 
