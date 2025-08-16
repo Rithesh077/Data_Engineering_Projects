@@ -2,13 +2,13 @@
 
 ## Project Overviw
 
-This project is a foundational data engineering task that builds a complete, end-to-end ETL (Extract, Transform, Load) pipeline.
+This project is a dynamic, interactive ETL (Extract, Transform, Load) pipeline.
 
-The pipeline performs the following steps:
+Instead of a static script, this tool prompts the user for a search topic (e.g., "machine learning") and a list of specific data fields (e.g., `name`, `owner`, `stars`). It then performs the following steps:
 
-1.  **Extract:** Fetches data about the most popular Python repositories from the live GitHub API.
-2.  **Transform:** Cleans and structures the raw JSON data, extracting only the most relevant fields.
-3.  **Load:** Saves the clean, processed data into a structured CSV file for easy analysis.
+1.  **Extract:** Dynamically builds a query and fetches the relevant data from the live GitHub API.
+2.  **Transform:** Cleans and structures the raw JSON response, extracting only the fields the user requested.
+3.  **Load:** Displays the final, processed data in a clean, tabular format directly in the console.
 
 This project serves as a practical demonstration of core data engineering skills, including API consumption, data processing, and data storage.
 
@@ -23,11 +23,13 @@ This project serves as a practical demonstration of core data engineering skills
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://www.google.com/url?sa=E&q=https%3A%2F%2Fgithub.com%2FRithesh077%2FData_Engineering_Projects
+    git clone https://github.com/Rithesh077/Data_Engineering_Projects.git
     ```
-2.  **Navigate to the project directory:**
+2.  **Navigate to the project directory and set up the environment:**
     ```bash
-    cd [repository-folder-name]
+    cd Data_Engineering_Projects
+    python -m venv .venv
+    .\.venv\Scripts\Activate.ps1
     ```
 3.  **Install the required dependencies:**
     ```bash
@@ -35,10 +37,11 @@ This project serves as a practical demonstration of core data engineering skills
     ```
 4.  **Run the pipeline:**
     ```bash
-    python project1.py
+    python Github_repo_pipeline.py
     ```
-
-The output will be a file named `repo_data.csv` in the same directory, containing the latest trending repository data.
+5.  **Follow the prompts:** The script will ask you to enter a search topic and a comma-separated list of fields to display. For example:
+    - **Topic:** `pandas`
+    - **Fields:** `name,stars,owner,description`
 
 ## Next Steps
 
